@@ -33,6 +33,7 @@ public class ProjectWTps : ModuleRules
 			"PWInput",
 			"PWGasCore", 
 			"PWLogging",
+			"PWTeams",
 			"DeveloperSettings"
 		});
 

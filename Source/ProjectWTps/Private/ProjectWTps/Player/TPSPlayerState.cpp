@@ -8,6 +8,7 @@
 #include "Libraries/GASCoreFunctions.h"
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Vitals.h"
 #include "ProjectWTPS/Settings/GameSettings.h"
+#include "TeamComponent.h"
 
 ATPSPlayerState::ATPSPlayerState()
 {
@@ -17,6 +18,9 @@ ATPSPlayerState::ATPSPlayerState()
 
 	ASCore = CreateDefaultSubobject<UAttributeSet_Core>("AttributeSet Core");
 	ASVitals = CreateDefaultSubobject<UAttributeSet_Vitals>("AttributeSet Vitals");
+
+	Team = CreateDefaultSubobject<UTeamComponent>("Team");
+	Team->SetIsReplicated(true);
 
 	SetNetUpdateFrequency(100);
 }
@@ -44,6 +48,8 @@ void ATPSPlayerState::PostInitializeComponents()
 
 	if (HasAuthority())
 	{
+		Team->TeamId = GetUniqueID();
+
 		const UGameSettings* GameSettings = UGameSettings::Get();
 		GetASC()->Abilities().AddAbilitySet(GameSettings->GetDefaultAbilitySet());
 

@@ -45,9 +45,8 @@ void ATPSPlayerState::PostInitializeComponents()
 	if (HasAuthority())
 	{
 		const UGameSettings* GameSettings = UGameSettings::Get();
-		GetASC()->Abilities().AddAbilities(GameSettings->GetDefaultAbilities());
-		for (FInputToAbility InputToAbility : GameSettings->GetDefaultInputToAbilities())
-			GetASC()->Abilities().AddAbility(InputToAbility.AbilityTag, InputToAbility.InputTag);
+		GetASC()->Abilities().AddAbilitySet(GameSettings->GetDefaultAbilitySet());
+
 		for (TSubclassOf<UGameplayEffect> GE : GameSettings->GetDefaultEffects())
 		{
 			FGameplayEffectContextHandle ContextHandle = ASC->MakeEffectContext();

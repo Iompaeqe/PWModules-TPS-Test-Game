@@ -6,22 +6,12 @@
 #include "GameplayEffect.h"
 #include "GameplayTagContainer.h"
 #include "PWInputConfig.h"
+#include "GAS/Abilities/PWAbilitySet.h"
 #include "Engine/DeveloperSettings.h"
 #include "GameSettings.generated.h"
 /**
  * 
  */
-
-USTRUCT(BlueprintType)
-struct FInputToAbility
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, Category="GAS", meta=(Categories="Input"))
-	FGameplayTag InputTag;
-	UPROPERTY(EditAnywhere, Category="GAS", meta=(Categories="Ability.Skill"))
-	FGameplayTag AbilityTag;
-};
 
 UCLASS(config=Game, defaultconfig)
 class PROJECTWTPS_API UGameSettings : public UDeveloperSettings
@@ -33,17 +23,15 @@ public:
 	virtual FName GetCategoryName() const override;
 
 	TArray<TSubclassOf<UGameplayEffect>> GetDefaultEffects() const;
-	TArray<FInputToAbility> GetDefaultInputToAbilities() const;
-	FGameplayTagContainer GetDefaultAbilities() const;
+	UPWAbilitySet* GetDefaultAbilitySet() const;
 	UPWInputConfig* GetInputConfig() const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, config, Category="GAS", meta=(AllowedClasses="GameplayEffect"))
 	TArray<TSoftClassPtr<UGameplayEffect>> DefaultEffects;
 	UPROPERTY(EditDefaultsOnly, config, BlueprintReadOnly, Category="GAS")
-	TArray<FInputToAbility> DefaultInputToAbilities;
-	UPROPERTY(EditDefaultsOnly, config, BlueprintReadOnly, Category="GAS", meta=(GameplayTagFilter = "Ability.Skill"))
-	FGameplayTagContainer DefaultAbilities;
+	TSoftObjectPtr<UPWAbilitySet> DefaultAbilitySet;
+
 	UPROPERTY(EditDefaultsOnly, config, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UPWInputConfig> InputConfig;
 };

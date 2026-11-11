@@ -23,14 +23,9 @@ TArray<TSubclassOf<UGameplayEffect>> UGameSettings::GetDefaultEffects() const
 	return Result;
 }
 
-TArray<FInputToAbility> UGameSettings::GetDefaultInputToAbilities() const
+UPWAbilitySet* UGameSettings::GetDefaultAbilitySet() const
 {
-	return DefaultInputToAbilities;
-}
-
-FGameplayTagContainer UGameSettings::GetDefaultAbilities() const
-{
-	return DefaultAbilities;
+	return DefaultAbilitySet.LoadSynchronous();
 }
 
 UPWInputConfig* UGameSettings::GetInputConfig() const

@@ -9,47 +9,14 @@
 #include "ProjectWTPS/Player/TPSPlayerState.h"
 #include "ProjectWTPS/Tags/ProjectWTpsTags.h"
 
+PW_REPLICATE_ATTRIBUTES(UAttributeSet_Vitals)
+
 UAttributeSet_Vitals::UAttributeSet_Vitals()
 {
-	TagsToAttributes.Add(PWTags::Attribute::Vital::Health, GetHealthAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::HealthMax, GetHealthMaxAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::HealthRegen, GetHealthRegenAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::Shield, GetShieldAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::ShieldMax, GetShieldMaxAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::ShieldRegen, GetShieldRegenAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::Mana, GetManaAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::ManaMax, GetManaMaxAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::ManaRegen, GetManaRegenAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::Stamina, GetStaminaAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::StaminaMax, GetStaminaMaxAttribute());
-	TagsToAttributes.Add(PWTags::Attribute::Vital::StaminaRegen, GetStaminaRegenAttribute());
-
-}
-
-void UAttributeSet_Vitals::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	// Vitals
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Health, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, HealthMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, HealthRegen, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Shield, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, ShieldMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, ShieldRegen, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Mana, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, ManaMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, ManaRegen, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, Stamina, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, StaminaMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(ThisClass, StaminaRegen, COND_None, REPNOTIFY_Always);
-}
-
-void UAttributeSet_Vitals::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
-{
-	Super::PreAttributeChange(Attribute, NewValue);
-
-	ClampAttributes(Attribute, NewValue);
+	AddClamped(GetHealthAttribute(), GetHealthMaxAttribute());
+	AddClamped(GetShieldAttribute(), GetShieldMaxAttribute());
+	AddClamped(GetManaAttribute(), GetManaMaxAttribute());
+	AddClamped(GetStaminaAttribute(), GetStaminaMaxAttribute());
 }
 
 void UAttributeSet_Vitals::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -59,35 +26,8 @@ void UAttributeSet_Vitals::PostGameplayEffectExecute(const FGameplayEffectModCal
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
-	// todo: if dead return
-	
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
-		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetHealthMax()));
-	if (Data.EvaluatedData.Attribute == GetManaAttribute())
-		SetMana(FMath::Clamp(GetMana(), 0.0f, GetManaMax()));
-	if (Data.EvaluatedData.Attribute == GetShieldAttribute())
-		SetShield(FMath::Clamp(GetShield(), 0.0f, GetShieldMax()));
-	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
-		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetStaminaMax()));
 	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 		HandleIncomingDamage(Props);
-}
-
-void UAttributeSet_Vitals::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
-{
-	Super::PostAttributeChange(Attribute, OldValue, NewValue);
-}
-
-void UAttributeSet_Vitals::ClampAttributes(const FGameplayAttribute& Attribute, float& NewValue) const
-{
-	if (Attribute == GetHealthAttribute())
-		NewValue = FMath::Clamp(NewValue, 0, GetHealthMax());
-	if (Attribute == GetShieldAttribute())
-		NewValue = FMath::Clamp(NewValue, 0, GetShieldMax());
-	if (Attribute == GetManaAttribute())
-		NewValue = FMath::Clamp(NewValue, 0, GetManaMax());
-	if (Attribute == GetStaminaAttribute())
-		NewValue = FMath::Clamp(NewValue, 0, GetStaminaMax());
 }
 
 void UAttributeSet_Vitals::HandleIncomingDamage(const FEffectProperties& Props)

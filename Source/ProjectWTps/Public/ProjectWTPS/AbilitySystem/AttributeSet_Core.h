@@ -15,13 +15,6 @@ class PROJECTWTPS_API UAttributeSet_Core : public UPWAttributeSetBase
 	GENERATED_BODY()
 
 public:
-	UAttributeSet_Core();
-	
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
-	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
-	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
-
 #pragma region Offense Attributes
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_AttackPower, Category = "Offense") FGameplayAttributeData AttackPower; UFUNCTION() void OnRep_AttackPower(const FGameplayAttributeData& OldValue) const { GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, AttackPower, OldValue); } ATTRIBUTE_ACCESSORS(ThisClass, AttackPower);
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalChance, Category = "Offense") FGameplayAttributeData CriticalChance; UFUNCTION() void OnRep_CriticalChance(const FGameplayAttributeData& OldValue) const { GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, CriticalChance, OldValue); } ATTRIBUTE_ACCESSORS(ThisClass, CriticalChance);

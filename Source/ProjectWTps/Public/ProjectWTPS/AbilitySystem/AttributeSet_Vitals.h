@@ -18,10 +18,7 @@ class PROJECTWTPS_API UAttributeSet_Vitals : public UPWAttributeSetBase
 public:
 	UAttributeSet_Vitals();
 	
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
-	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 
 #pragma region Vital Attributes
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital") FGameplayAttributeData Health; UFUNCTION() void OnRep_Health(const FGameplayAttributeData& OldValue) const { GAMEPLAYATTRIBUTE_REPNOTIFY(ThisClass, Health, OldValue); } ATTRIBUTE_ACCESSORS(ThisClass, Health);
@@ -43,7 +40,6 @@ public:
 #pragma endregion
 
 protected:
-	void ClampAttributes(const FGameplayAttribute& Attribute, float& NewValue) const;
 	void HandleIncomingDamage(const FEffectProperties& Props);
 	void HandleDeath(const FEffectProperties& Props);
 

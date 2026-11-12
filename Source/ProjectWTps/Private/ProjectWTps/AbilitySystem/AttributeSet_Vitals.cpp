@@ -65,6 +65,10 @@ void UAttributeSet_Vitals::PostGameplayEffectExecute(const FGameplayEffectModCal
 		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetHealthMax()));
 	if (Data.EvaluatedData.Attribute == GetManaAttribute())
 		SetMana(FMath::Clamp(GetMana(), 0.0f, GetManaMax()));
+	if (Data.EvaluatedData.Attribute == GetShieldAttribute())
+		SetShield(FMath::Clamp(GetShield(), 0.0f, GetShieldMax()));
+	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
+		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetStaminaMax()));
 	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 		HandleIncomingDamage(Props);
 }

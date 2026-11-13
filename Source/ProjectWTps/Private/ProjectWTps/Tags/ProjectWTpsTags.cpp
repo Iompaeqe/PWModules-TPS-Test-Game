@@ -39,7 +39,7 @@ namespace PWTags::Attribute::Vital
 
 namespace PWTags::Attribute::Offense
 {
-	UE_DEFINE_GAMEPLAY_TAG(Root, "Attribute.");
+	UE_DEFINE_GAMEPLAY_TAG(Root, "Attribute.Offense");
 	UE_DEFINE_GAMEPLAY_TAG(AttackPower, "Attribute.Offense.AttackPower");
 	UE_DEFINE_GAMEPLAY_TAG(CriticalChance, "Attribute.Offense.CriticalChance");
 	UE_DEFINE_GAMEPLAY_TAG(CriticalPower, "Attribute.Offense.CriticalPower");

@@ -8,7 +8,7 @@
 #include "Libraries/PWGasFunctions.h"
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Vitals.h"
 #include "ProjectWTPS/Settings/GameSettings.h"
-#include "TeamComponent.h"
+#include "PWTeamComponent.h"
 #include "TimerManager.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/PlayerController.h"
@@ -22,7 +22,7 @@ ATPSPlayerState::ATPSPlayerState()
 	ASCore = CreateDefaultSubobject<UAttributeSet_Core>("AttributeSet Core");
 	ASVitals = CreateDefaultSubobject<UAttributeSet_Vitals>("AttributeSet Vitals");
 
-	Team = CreateDefaultSubobject<UTeamComponent>("Team");
+	Team = CreateDefaultSubobject<UPWTeamComponent>("Team");
 	Team->SetIsReplicated(true);
 
 	SetNetUpdateFrequency(100);

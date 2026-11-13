@@ -5,7 +5,7 @@
 #include "AbilitySystemGlobals.h"
 #include "EngineUtils.h"
 #include "ProjectWTps.h"
-#include "TeamFunctions.h"
+#include "PWTeamFunctions.h"
 #include "TimerManager.h"
 #include "GameFramework/Pawn.h"
 #include "GAS/ASC/PWAbilitySystemComponent.h"
@@ -78,7 +78,7 @@ APawn* ATPSAIController::FindTarget() const
 	for (TActorIterator<APawn> It(GetWorld()); It; ++It)
 	{
 		APawn* Other = *It;
-		if (Other == MyPawn || !UTeamFunctions::AreEnemies(MyPawn, Other))
+		if (Other == MyPawn || !UPWTeamFunctions::AreEnemies(MyPawn, Other))
 			continue;
 
 		const float Distance = FVector::DistSquared(MyPawn->GetActorLocation(), Other->GetActorLocation());

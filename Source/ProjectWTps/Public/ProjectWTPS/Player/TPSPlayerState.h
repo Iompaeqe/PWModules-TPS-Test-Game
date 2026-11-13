@@ -14,7 +14,7 @@ class ATPSPlayerState;
 struct FPWEffectProperties;
 class UAttributeSet_Core;
 class UPWAbilitySystemComponent;
-class UTeamComponent;
+class UPWTeamComponent;
 
 
 UCLASS()
@@ -40,7 +40,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UAttributeSet_Vitals> ASVitals;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UTeamComponent> Team;
+	TObjectPtr<UPWTeamComponent> Team;
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;

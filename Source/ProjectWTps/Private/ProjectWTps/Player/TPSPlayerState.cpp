@@ -9,6 +9,9 @@
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Vitals.h"
 #include "ProjectWTPS/Settings/GameSettings.h"
 #include "TeamComponent.h"
+#include "TimerManager.h"
+#include "GameFramework/GameModeBase.h"
+#include "GameFramework/PlayerController.h"
 
 ATPSPlayerState::ATPSPlayerState()
 {
@@ -61,6 +64,47 @@ void ATPSPlayerState::PostInitializeComponents()
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 		}
 	}
+}
+
+void ATPSPlayerState::HandleDeath()
+{
+	if (!HasAuthority() || bDying)
+		return;
+
+	// Death is reported from inside an effect being applied, so the pawn is removed on the next tick.
+	bDying = true;
+	ASC->CancelAllAbilities();
+	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::FinishDeath);
+}
+
+void ATPSPlayerState::FinishDeath()
+{
+	bDying = false;
+
+	APawn* Pawn = GetPawn();
+	AController* Controller = Pawn ? Pawn->GetController() : nullptr;
+	if (!Pawn)
+		return;
+
+	APlayerController* Player = Cast<APlayerController>(Controller);
+	if (!Player)
+	{
+		Pawn->Destroy();
+		if (Controller)
+			Controller->Destroy();
+		return;
+	}
+
+	Player->UnPossess();
+	Pawn->Destroy();
+
+	ASC->SetNumericAttributeBase(UAttributeSet_Vitals::GetHealthAttribute(), ASVitals->GetHealthMax());
+	ASC->SetNumericAttributeBase(UAttributeSet_Vitals::GetShieldAttribute(), ASVitals->GetShieldMax());
+	ASC->SetNumericAttributeBase(UAttributeSet_Vitals::GetManaAttribute(), ASVitals->GetManaMax());
+	ASC->SetNumericAttributeBase(UAttributeSet_Vitals::GetStaminaAttribute(), ASVitals->GetStaminaMax());
+
+	if (AGameModeBase* GameMode = GetWorld()->GetAuthGameMode())
+		GameMode->RestartPlayer(Player);
 }
 
 UAbilitySystemComponent* ATPSPlayerState::GetAbilitySystemComponent() const

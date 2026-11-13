@@ -57,6 +57,8 @@ void UAttributeSet_Vitals::HandleIncomingDamage(const FEffectProperties& Props)
 
 void UAttributeSet_Vitals::HandleDeath(const FEffectProperties& Props)
 {
+	if (ATPSPlayerState* State = GetPS())
+		State->HandleDeath();
 }
 
 ATPSPlayerState* UAttributeSet_Vitals::GetPS()

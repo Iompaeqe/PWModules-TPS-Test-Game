@@ -47,5 +47,12 @@ public:
 	virtual UPWAbilitySystemComponent* GetASC() const;
 	virtual UAttributeSet_Core* GetASCore() const;
 
+	// Test-bed death: an AI is removed, a player respawns with full vitals.
+	void HandleDeath();
+
+private:
+	void FinishDeath();
+	bool bDying = false;
+
 	
 };

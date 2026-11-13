@@ -19,9 +19,14 @@
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Core.h"
 #include "ProjectWTps/AbilitySystem/Library/AttributeLibrary.h"
 #include "ProjectWTPS/Player/TPSPlayerState.h"
+#include "ProjectWTPS/AI/TPSAIController.h"
 
 AProjectWTpsCharacter::AProjectWTpsCharacter()
 {
+	// A character placed in the level with no player becomes a test AI caster.
+	AIControllerClass = ATPSAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorld;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 

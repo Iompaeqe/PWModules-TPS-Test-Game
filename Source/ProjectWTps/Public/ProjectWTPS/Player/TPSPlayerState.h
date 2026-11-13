@@ -11,7 +11,7 @@
 
 class UAttributeSet_Vitals;
 class ATPSPlayerState;
-struct FEffectProperties;
+struct FPWEffectProperties;
 class UAttributeSet_Core;
 class UPWAbilitySystemComponent;
 class UTeamComponent;

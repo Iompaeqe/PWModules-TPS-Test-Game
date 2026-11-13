@@ -5,7 +5,7 @@
 
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Core.h"
 #include "GAS/ASC/PWAbilitySystemComponent.h"
-#include "Libraries/GASCoreFunctions.h"
+#include "Libraries/PWGasFunctions.h"
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Vitals.h"
 #include "ProjectWTPS/Settings/GameSettings.h"
 #include "TeamComponent.h"
@@ -30,7 +30,7 @@ ATPSPlayerState::ATPSPlayerState()
 
 bool ATPSPlayerState::ApplyEffects_Implementation(class USpellParams* SpellParams)
 {
-	return UGASCoreFunctions::ApplyEffects(GetASC(), SpellParams);
+	return UPWGasFunctions::ApplyEffects(GetASC(), SpellParams);
 }
 
 UObject* ATPSPlayerState::GetEffectReceiver_Implementation()

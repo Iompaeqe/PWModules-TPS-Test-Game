@@ -40,8 +40,8 @@ public:
 #pragma endregion
 
 protected:
-	void HandleIncomingDamage(const FEffectProperties& Props);
-	void HandleDeath(const FEffectProperties& Props);
+	void HandleIncomingDamage(const FPWEffectProperties& Props);
+	void HandleDeath(const FPWEffectProperties& Props);
 
 public:
 	ATPSPlayerState* PS;

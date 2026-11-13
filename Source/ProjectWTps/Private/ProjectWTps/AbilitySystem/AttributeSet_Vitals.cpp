@@ -3,7 +3,7 @@
 
 #include "ProjectWTPS/AbilitySystem/AttributeSet_Vitals.h"
 
-#include "FEffectProperties.h"
+#include "PWEffectProperties.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
 #include "ProjectWTPS/Player/TPSPlayerState.h"
@@ -23,14 +23,14 @@ void UAttributeSet_Vitals::PostGameplayEffectExecute(const FGameplayEffectModCal
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	FEffectProperties Props;
+	FPWEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
 	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 		HandleIncomingDamage(Props);
 }
 
-void UAttributeSet_Vitals::HandleIncomingDamage(const FEffectProperties& Props)
+void UAttributeSet_Vitals::HandleIncomingDamage(const FPWEffectProperties& Props)
 {
 	float LocalIncomingDamage = GetIncomingDamage();
 	SetIncomingDamage(0);
@@ -55,7 +55,7 @@ void UAttributeSet_Vitals::HandleIncomingDamage(const FEffectProperties& Props)
 	}
 }
 
-void UAttributeSet_Vitals::HandleDeath(const FEffectProperties& Props)
+void UAttributeSet_Vitals::HandleDeath(const FPWEffectProperties& Props)
 {
 	if (ATPSPlayerState* State = GetPS())
 		State->HandleDeath();

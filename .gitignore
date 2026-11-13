@@ -74,3 +74,6 @@ desktop.ini
 # Auto-generated config files
 Saved/
 DerivedDataCache/
+
+# Rider editor plugin, installed per machine
+Plugins/Developer/RiderLink/

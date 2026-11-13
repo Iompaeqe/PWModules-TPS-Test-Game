@@ -6,7 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
-#include "Ability/EffectReceiver.h"
+#include "Ability/PWEffectReceiver.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "ProjectWTpsCharacter.generated.h"
@@ -20,7 +20,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(abstract)
-class AProjectWTpsCharacter : public ACharacter, public IAbilitySystemInterface, public IEffectReceiver
+class AProjectWTpsCharacter : public ACharacter, public IAbilitySystemInterface, public IPWEffectReceiver
 {
 	GENERATED_BODY()
 

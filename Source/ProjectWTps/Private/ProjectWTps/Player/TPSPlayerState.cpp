@@ -28,7 +28,7 @@ ATPSPlayerState::ATPSPlayerState()
 	SetNetUpdateFrequency(100);
 }
 
-bool ATPSPlayerState::ApplyEffects_Implementation(class USpellParams* SpellParams)
+bool ATPSPlayerState::ApplyEffects_Implementation(class UPWSpellParams* SpellParams)
 {
 	return UPWGasFunctions::ApplyEffects(GetASC(), SpellParams);
 }

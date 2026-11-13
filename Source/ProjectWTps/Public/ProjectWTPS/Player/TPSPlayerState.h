@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
-#include "Ability/Affectable.h"
-#include "Ability/EffectReceiver.h"
+#include "Ability/PWAffectable.h"
+#include "Ability/PWEffectReceiver.h"
 #include "GameFramework/PlayerState.h"
 #include "TPSPlayerState.generated.h"
 
@@ -18,14 +18,14 @@ class UTeamComponent;
 
 
 UCLASS()
-class PROJECTWTPS_API ATPSPlayerState : public APlayerState, public IAbilitySystemInterface, public IAffectable, public IEffectReceiver
+class PROJECTWTPS_API ATPSPlayerState : public APlayerState, public IAbilitySystemInterface, public IPWAffectable, public IPWEffectReceiver
 {
 	GENERATED_BODY()
 
 public:
 	ATPSPlayerState();
 	//~IEffectable
-	virtual bool ApplyEffects_Implementation(class USpellParams* SpellParams) override;
+	virtual bool ApplyEffects_Implementation(class UPWSpellParams* SpellParams) override;
 	//~IPWEffectReceiver
 	virtual UObject* GetEffectReceiver_Implementation() override;	
 	
